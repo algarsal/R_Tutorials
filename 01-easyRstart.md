@@ -29,7 +29,6 @@ available in
  [PDF](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-01_Easy_R_Start.pdf) and [EPUB](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-01_Easy_R_Start.epub)
 
 ***  
-![stack Overflow](http://lmsotfy.com/so.png)
 
 ![license](http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png)
 
