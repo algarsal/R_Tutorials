@@ -4,8 +4,8 @@ R tutorials for the subject Data acquistion, analyses and  scientific methods in
 I link here the "R for life sciences" lecture notes I am doing, so they are easily available.
 
 
-| Lecture notes | Web | html | pdf | epub |
-|---------------|-----|------|-----|------|
+| Lecture notes | Web html | pdf | epub |
+|---------------|----------|-----|------|
 | 1. Easy R start	| html	| pdf	| epub |
 | 2. Operations	| html	| pdf	| epub |
 | 3. Basic graphics and data | html	| pdf	| epub |
