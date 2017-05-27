@@ -19,22 +19,7 @@ urlcolor: blue
 R FOR LIFE SCIENCES. CHAPTER 1: EASY R START
 --------------------------------------------->
 
-
-<!--------------------------------------------
-               PRIMERA PÁGINA
---------------------------------------------->
-
-***
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
- Cite as: Alfonso Garmendia
+Cite as: Alfonso Garmendia
  (2016)
  R for life sciences. 
  Chapter 1: Easy R start.
@@ -43,19 +28,10 @@ R FOR LIFE SCIENCES. CHAPTER 1: EASY R START
 available in 
  [PDF](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-01_Easy_R_Start.pdf) and [EPUB](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-01_Easy_R_Start.epub)
 
-
-
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
 ***  
 
 <div style="width: 25%; height: 25%">
-![](../Imagenes/CC2.jpeg)
+![](http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png)
 </div>
 
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/ "License").
