@@ -1,0 +1,440 @@
+---
+title: 'R for life sciences. Chapter 4: Hypothesis testing'
+author: 
+  - name: Alfonso Garmendia
+    email: algarsal@upv.es
+    affiliation: Instituto Agroforestal Mediterráneo. Departamento de Ecosistemas Agroforestales. Universitat Politècnica de València.
+date: '`r Sys.Date()`'
+toctitle: "Table of contents"
+output: 
+    html_document:
+      template: templates/toctitle.html
+      toc: TRUE
+      toc_depth: 6
+      fig_caption: yes
+      highlight: tango
+#     toc_float:
+#         collapsed: TRUE
+    word_document:
+      fig_caption: yes
+      reference_docx: "templates/template.docx"
+    pdf_document:
+      fig_caption: no
+      highlight: tango
+      keep_tex: no
+linkcolor: magenta
+citecolor: red
+urlcolor: blue
+---
+
+<!--------------------------------------------
+R FOR LIFE SCIENCES. CHAPTER 4: Hypothesis testing
+look: http://www.r-tutor.com/elementary-statistics
+--------------------------------------------->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.path  = '../Resultados/',
+                      fig.width = 8, fig.height = 6,
+                      dpi = 250)
+
+#  En la plantilla está definido 
+#  que el estilo TITULO1 tiene un salto de página en DOCX
+#  LICENCIA CREATIVE COMMONS
+######################################################################
+# Esta es la longitud del código sin salirse en ningún formato
+```
+<!--------------------------------------------
+               PRIMERA PÁGINA
+--------------------------------------------->
+
+***
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+ Cite as: Alfonso Garmendia
+ (`r format(Sys.time(), '%Y')`)
+ R for life sciences. 
+ Chapter 4: Hypothesis testing.
+ <http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-04_Tests.html>
+
+available in
+ [PDF](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-04_Tests.pdf) and [EPUB](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-04_Tests.epub)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+***  
+
+<div style="width: 25%; height: 25%">
+![](images/CC2.jpeg)
+</div>
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/ "License").
+
+&nbsp;
+
+Written in [Rmarkdown](http://rmarkdown.rstudio.com/), using [Rstudio](https://www.rstudio.com/) and [pandoc](http://pandoc.org/).
+
+***  
+
+\pagebreak
+
+# Hypothesis testing
+
+<!--------------------------------------------
+##########################################################
+    AQUÍ EMPIEZA REALMENTE EL CAPÍTULO.
+    Acordarse que los #titulo1 son salto de pagina en word
+##########################################################
+--------------------------------------------->
+
+There is a lot of information available about all the possible tests. Too much for a single course. But there are a few important things to learn:
+ 
+ * How to choose the right test for your hypothesis and data.
+ 
+ * How to look how to perform it.
+ 
+Therefore, what you have here is:
+
+ * A table to help choosing the right test
+ 
+ * A compilation of web places where start looking how to perform the basic (and not so basics) tests. 
+ 
+## Which test should I do?
+
+To choose the right test depending on the number and nature of dependent and independent variables, you can use [this table](http://personales.upv.es/algarsal/Documentation/Analyses.html), also available in [PDF](http://personales.upv.es/algarsal/Documentation/Analyses.pdf) or [EPUB](http://personales.upv.es/algarsal/Documentation/Analyses.epub). 
+
+## Population mean and proportion
+
+A good tutorial for one and two tails tests for means and proportions is: 
+
+<http://www.r-tutor.com/elementary-statistics/hypothesis-testing>
+
+### mean comparison
+
+For the comparison of means between samples:
+
+<http://www.r-tutor.com/elementary-statistics/inference-about-two-populations>
+
+Also, look at the anova tests and TukeyHSD posthoc comparisons to compare means in linear models. 
+
+## Linear models
+
+This is a good introduction to linear models and generalized linear models:
+
+<https://www.r-bloggers.com/an-intro-to-models-and-generalized-linear-models-in-r/>
+
+### Correlation
+
+see:
+
+<http://www.r-tutor.com/elementary-statistics/numerical-measures/correlation-coefficient>
+
+### Linear Regression
+
+Very well explained here:
+
+<http://tutorials.iq.harvard.edu/R/Rstatistics/Rstatistics.html>
+
+### Anova
+
+A good tutorial on anova:
+
+<http://www.statmethods.net/stats/anova.html>
+
+Anova is a type of linear model. It is possible to make an anova using lm(), but then it will be a "type 3" anova. The command aov() makes by default a "type 1" anova. Also, a difference of aov() from lm () is in the way print, summary and so on handle the fit: this is expressed in the traditional language of the analysis of variance rather than that of linear models. 
+
+If using anova(lm()), you should get the same results than with aov().
+
+Type 1 or Type 3 sums of squares will differ when the correlation between your explanatory variables is not exactly 0 (it is only important if there is more than one). When they are correlated, some SS are unique to one predictor and some to the other, but some SS could be attributed to either or both. 
+type 1 SS approach is for the analyst to use their judgment and assign the overlapping SS to the first of the variables. The other variable goes into the model second and gets the SS that looks like a cookie with a bite taken out of it. 
+
+Alternatively, you could do this twice with each going in first, and report the F change test for both predictors. In this way, neither variable gets the SS due to the overlap. This approach uses Type 3 SS.
+
+Type 3 SS approach is held in low regard, besides it is the default anova in SPSS and other statistical programs.
+
+**Type 1:** SS(A) and SS(B|A)
+
+**Type 3:** SS(A|B) and SS(B|A)
+
+## Tests of normality
+
+Normality assumptions are not always so restrictive as people thinks. For linear models the only normality assumption needed is the normality of residuals. It is very well explained at:
+
+<https://www.r-bloggers.com/predictors-responses-and-residuals-what-really-needs-to-be-normally-distributed/>
+
+For the shapiro.test() it is interesting to see the **example(shapiro.test)**. H~0~ is normality and H~1~ is non-normal. For further interpretation: 
+<http://emilkirkegaard.dk/en/?p=4452>
+
+Remember the Central Limit Theorem that says that if the errors are not normal then the distribution of the coefficients will approach normality as the sample size increases. The more important question is are the residuals "normal enough"?  for which there is not a definitive test (experience and plots help). **plot(lm())** to check assumptions.
+
+But this all depends on another assumption, that the data is at least interval data. If you do not believe on the at least theoretical normality of the residuals, you can rather use non-parametric analyses. or generalized linear models **glm()**. 
+
+## Non-parametric analyses
+
+For groups comparisons:
+
+<http://www.statmethods.net/stats/nonparametric.html>
+
+
+## Multivariate analyses
+
+The [Little book of R for Multivariate Analyses](https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/) has a nice explanation for Principal components and Discriminant analyses. But is important to [load the data](https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html#reading-multivariate-analysis-data-into-r) first.
+
+### Principal components
+
+See:
+<https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html#principal-component-analysis>
+
+### Discriminant analyses
+
+See:
+<https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html#linear-discriminant-analysis>
+
+### Correspondence
+
+Tutorial:
+<http://www.sthda.com/english/wiki/correspondence-analysis-in-r-the-ultimate-guide-for-the-analysis-the-visualization-and-the-interpretation-r-software-and-data-mining>
+
+other with same data:
+<http://factominer.free.fr/classical-methods/correspondence-analys>
+
+### Classification analyses
+
+For a complete revision of methods:
+<http://www.sthda.com/english/wiki/cluster-analysis-in-r-unsupervised-machine-learning>
+
+***
+
+\pagebreak
+
+# Exercises
+
+```{r echo = F, eval=T}
+############### eval = F to see the results, T to hide results
+knitr::opts_chunk$set(echo = F, eval=F)
+```
+
+
+1. For the data InsectSpray, make a table for the number of insects for each spray with the mean, median and standard error. 
+
+```{r}
+### data InsectSprays
+?InsectSprays
+str(InsectSprays)
+
+### first way: using for()
+TA <- data.frame(matrix(nrow = 6, ncol = 0))
+for (i in 1:length(levels(InsectSprays$spray))) {
+    spr <- levels(InsectSprays$spray)[i]
+    SS <- subset(InsectSprays$count, InsectSprays$spray == spr)
+    TA$Spray[i] <- spr
+    TA$Mean[i] <- mean(SS)
+    TA$Median[i] <- median(SS)
+    TA$StandardError[i] <- sd(SS)/sqrt(length(SS))
+}
+TA
+
+### other way: using aggregate()
+TA <- aggregate(InsectSprays$count ~ InsectSprays$spray,
+                FUN = function(x) c(mean = mean(x),
+                                    SE = sd(x)/sqrt(length(x)),
+                                    median = median(x)))
+TA <- as.data.frame(as.matrix(TA))
+names(TA) <- c("Spray", "Mean", "StandError", "Median")
+TA
+
+```
+
+
+2. Print a box-plot to see the differences of counts between sprays. 
+
+```{r}
+#### BoxPlot
+boxplot(count ~ spray, data = InsectSprays)        # Plot
+
+```
+
+
+3. Test for differences between sprays performing Student's t-tests^[t.test(): for means comparison]
+
+```{r}
+### singular examples
+A <- subset(InsectSprays, InsectSprays$spray=="A")
+B <- subset(InsectSprays, InsectSprays$spray=="B")
+C <- subset(InsectSprays, InsectSprays$spray=="C")
+t.test(A$count,B$count)                         # NON-SIGNIFICANT
+t.test(B$count,C$count)                         # SIGNIFICANT
+str(t.test(A$count,B$count))
+
+
+### t.test for all posibilities (15)
+
+lis <- length(levels(InsectSprays$spray))
+x <- InsectSprays$spray
+y <- InsectSprays$count
+TT <- data.frame(matrix(nrow = 15, ncol = 0))
+k = 1
+for (i in 1:(lis - 1)) {
+    for (j in (i + 1):lis) {
+        SS1 <- subset(y, x == levels(x)[i])
+        SS2 <- subset(y, x == levels(x)[j])
+        TT$Spray1[k] <- levels(x)[i]
+        TT$Spray2[k] <- levels(x)[j]
+        TT$t_test[k] <- t.test(SS1,SS2)$p.value
+        k = k + 1
+    }
+}
+### format
+TT$t_test <- format(TT$t_test, digits = 3, scientific = FALSE)
+
+### Clean environment
+rm(A, B, C, i, j, k, lis, spr, SS, SS1, SS2, x, y)
+
+```
+
+
+4. Test for differences between sprays using anova^[aov()] and Tukey posthoc comparison^[TukeyHSD(): Tukey's ‘Honest Significant Difference’ method].
+
+```{r}
+### Anova
+# lmSpray <- lm(InsectSprays$count~InsectSprays$spray)
+# anova(lmSpray)                                    # Is the same
+AnSpray <- aov(InsectSprays$count~InsectSprays$spray)
+summary(AnSpray)
+TukeyHSD(AnSpray)                                   # Differences,
+
+### Using agricolae package
+
+# install.packages("agricolae")
+library(agricolae)
+
+HSD.test(AnSpray, "InsectSprays$spray",console = T)
+
+letDif_anova <- c("a", "a", "b", "b", "b", "a")
+
+```
+
+
+5. Test for differences between sprays using non-parametric Kruskal-Wallis rank sum test^[kruskal.test()].
+
+```{r}
+### NON-PARAMETRIC
+KW <- kruskal.test(InsectSprays$count~InsectSprays$spray)
+print(KW)
+
+### Using agricolae package
+
+# install.packages("agricolae")
+library(agricolae)
+
+KW <- kruskal(InsectSprays$count, InsectSprays$spray)
+KW$groups
+
+### Using PMCMR package
+
+# install.packages("PMCMR")
+library(PMCMR)
+
+posthoc.kruskal.nemenyi.test(InsectSprays$count ~ InsectSprays$spray,
+                             method = "Tukey")       # PostHoc
+
+
+letDif_KW <- c("a", "a", "c", "b", "bc", "a")
+
+```
+
+
+6. Transform count data using sqrt(counts) and redo the anova and tukey posthoc comparison
+
+```{r}
+### Square root transformation
+AnSprSq <- aov(sqrt(count) ~ spray, data = InsectSprays)
+summary(AnSprSq)                             # Significant differ.
+TukeyHSD(AnSprSq)                            # Difference for C-D
+HSD.test(AnSprSq, "spray",console = T) # agricolae package
+
+letDif_anovaSQR <- c("a", "a", "c", "b", "bc", "a")
+
+```
+
+
+7. Test for normality of residuals for the two performed anova analyses of points 4 and 6 using shapiro.test() and plotting the anova to see the qqplots and compare them.
+
+```{r}
+#### Check for normality of residuals
+shapiro.test(AnSpray$residuals)              # NON-NORMAL
+shapiro.test(AnSprSq$residuals)              # NORMAL (not separate)
+opar <- par()                                # Saves device config.
+par(mfrow = c(2, 2), oma = c(0, 0, 1.1, 0))  # Divide device in four
+plot(AnSpray, ask = F)                       # Normality
+plot(AnSprSq, ask = F)                           # better
+par(opar)                                    # Return device to inic.
+
+rm(opar)
+
+```
+
+
+8. ¿Which analysis is the adequate in this case? Why?
+
+```{r}
+# We cannot use anova because residuals are not normally distributed
+# We can transform the data to meet normality, but results are more difficult to interpret
+# We can use always a non parametric analyses, and of course, logical thinking.
+
+# to compare two linear models we could use AIC (Akaike index) or BIC (Bayesian index). The less the better.
+AIC(AnSpray, AnSprSq)
+BIC(AnSpray, AnSprSq)
+
+```
+
+
+9. ¿Are there differences between the results from the different analyses? ¿Which ones?
+
+```{r}
+# There are two clear groups or sprays: A, B and F on one side and C, D, E on the other, with significantly less insects.
+
+```
+
+
+10. Plot a definitive box-plot with letters indicating significant differences between sprays. Same letter means that there is not a significant difference. 
+
+```{r}
+### Boxplot with differences
+boxplot(count ~ spray, data = InsectSprays, ylim = c(0,30),
+        xlab = "Spray", ylab = "Insect count",
+        main = "InsectSprays data and Tukey HSD", varwidth = TRUE, col = "lightgray")
+for (i in 1:6) {
+    text(i,28,letDif_anova[i])
+}
+
+### Boxplot with differences in SQRT MODEL
+boxplot(sqrt(count) ~ spray, data = InsectSprays, ylim = c(0,7),
+        xlab = "Spray", ylab = "sqrt(Insect count)",
+        main = "InsectSprays data (sqrt transformed)", varwidth = TRUE, col = "lightgray")
+for (i in 1:6) {
+    text(i,6,letDif_anovaSQR[i])
+}
+
+### Boxplot with NON PARAMETRIC DIFFERENCES
+boxplot(count ~ spray, data = InsectSprays, ylim = c(0,30),
+        xlab = "Spray", ylab = "Insect count",
+        main = "InsectSprays data (Kruskall-Wallis)", varwidth = TRUE, col = "lightgray")
+for (i in 1:6) {
+    text(i,28,letDif_KW[i])
+}
+
+```
+
+

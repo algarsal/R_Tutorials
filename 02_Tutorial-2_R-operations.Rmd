@@ -1,0 +1,440 @@
+---
+title: 'R for life sciences. Chapter 2: Operations in R'
+author: 
+  - name: Alfonso Garmendia
+    email: algarsal@upv.es
+    affiliation: Instituto Agroforestal Mediterráneo. Departamento de Ecosistemas Agroforestales. Universitat Politècnica de València.
+date: '`r Sys.Date()`'
+toctitle: "Table of contents"
+output: 
+    html_document:
+      template: templates/toctitle.html
+      toc: TRUE
+      toc_depth: 6
+      fig_caption: yes
+      highlight: tango
+#     toc_float:
+#         collapsed: TRUE
+    word_document:
+      fig_caption: yes
+      reference_docx: "templates/template.docx"
+    pdf_document:
+      fig_caption: no
+      highlight: tango
+      keep_tex: no
+linkcolor: magenta
+citecolor: red
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+#·····································································
+#=====================================================================
+#               OPCIONES KNITR
+#=====================================================================
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.path  = '../Resultados/',
+                      fig.width = 6, fig.height = 6)
+#
+#·····································································
+#  En la plantilla está definido 
+#  que el estilo TITULO1 tiene un salto de página en DOCX
+#  LICENCIA CREATIVE COMMONS
+######################################################################
+# Esta es la longitud del código sin salirse en ningún formato
+```
+<!--------------------------------------------
+               PRIMERA PÁGINA
+--------------------------------------------->
+
+***
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+ Cite as: Alfonso Garmendia
+ (`r format(Sys.time(), '%Y')`)
+ R for life sciences. 
+ Chapter 2: Operations in R.
+ <http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-02_Operations.html>
+
+available in 
+ [PDF](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-02_Operations.pdf) and [EPUB](http://personales.upv.es/algarsal/Documentation/Garmendia-R-Tutorial-02_Operations.epub)
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+***  
+
+<div style="width: 25%; height: 25%">
+![](images/CC2.jpeg)
+</div>
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/ "License").
+
+&nbsp;
+
+Written in [Rmarkdown](http://rmarkdown.rstudio.com/), using [Rstudio](https://www.rstudio.com/) and [pandoc](http://pandoc.org/).
+
+***  
+
+\pagebreak
+
+# Operations
+
+<!--------------------------------------------
+##########################################################
+    AQUÍ EMPIEZA REALMENTE EL CAPÍTULO
+##########################################################
+--------------------------------------------->
+
+## Sintax and operators
+
+We have already seen in chapter 1 several operators to address or assign data into and object. We can see a table of operators by precedence order using **?Syntax**
+
+### Adressing operators
+
+$ , @ :
+  : Address to a component into an objects, by names
+
+[ , [[ :
+  : Indexing components into an object 
+
+? :
+  : Help
+  
+<- , <<- , = :
+  : Assignment, right to left. The use of = for assignment is not advisable. 
+  
+\~ :
+  : As in formulae (write it with Alt-4, or Alt-Ñ in Spanish keyboard)
+
+  
+### Arithmetic operators 
+by order of precedence. If the objects are not numeric, they will be coerced into numeric, if possible. 
+
+^ :
+  : Exponential
+
+%/% , %% :
+  : Divisor and remainder for a division.
+
+* , / :
+  : Multiply and divide
+
++ , - :
+  : Addition and subtraction
+
+### Comparison operators
+
+Output will be a Logical or a list of logicals (True - False)
+
+< , > , <= , >= : 
+  : Leaser, greater, leaser or equal, greater or equal
+
+== , != :
+  : Equal and different
+
+%in% :
+  : Indicates if there is a match
+
+### Logical operators
+
+! :
+  : Logical NOT
+
+& , && :
+  : Logical AND
+
+| , || :
+  : Logical OR
+
+Let's see some examples with operators: 
+
+```{r, results='hide'}
+#=====================================
+#    Some examples with operators
+#=====================================
+x <- -1:12                    # Create vector
+x                             # See vector
+x + 1                         # sum 1
+2 * x + 3                     # same that (2*x)+3
+2 * (x + 3)
+x %% 2                        #-- is periodic
+x %% 5                        #-- is periodic
+x %/% 5
+x / 5
+###### Logical AND ("&&") has higher precedence than OR ("||"): ######
+TRUE || TRUE && FALSE   # is the same as
+TRUE || (TRUE && FALSE) # and different from
+(TRUE || TRUE) && FALSE
+
+#### Special operators have higher precedence than "!" (logical NOT).
+# You can use this for %in% :
+1:10 %in% c(2, 3, 5, 7)
+!1:10 %in% c(2, 3, 5, 7)      # same as !(1:10 %in% c(2, 3, 5, 7))
+!(1:10 %in% c(2, 3, 5, 7))
+# but it is strongly advise to use the "!( ... )" form in this case!
+```
+
+### Some Arithmetical commands
+There are too many commands in R to list them all, but some of them are frequently used for calculations. 
+
+This commands return a number:
+```{r, results='hide'}
+#=====================================
+#    Commands that return a number
+#=====================================
+sum(x)            # sum of the elements of x
+prod(x)           # product of the elements of x
+max(x)            # maximum of the elements of x
+min(x)            # minimum of the elements of x
+which.max(x)      # index of the maximum of the elements of x
+which.min(x)      # index of the minimum of the elements of x
+which(x == 2)     # index of the first element that fits
+length(x)         # number of elements in x
+mean(x)           # mean of the elements in x
+median(x)         # median of the elements in x
+var(x)            # variance of the elements in x
+sd(x)             # standard deviation of the elements in x
+# Sometimes is useful to round the result, for example:
+round(sd(x), 2)   # round(x, n) rounds the elements of x to n decimals
+```
+
+An these operations can modify either a number or all the numbers in a vector or a matrix: 
+```{r, results='hide', warning=F}
+#=====================================
+#    Commands to modify vectors
+#=====================================
+log(x, 2)          # logarithm in base 2 ; log(x, base)
+sqrt(x)            # Square root of x. (NaN: Not a Number)
+#  match (x, y) returns a vector with the elements of x which are in y
+match(x, 2)      
+#  na.omit(x) # supresses the observations with missing data 
+na.omit(log(x, 2)) # (NA: Not Available)
+```
+
+And of course, it is possible to make combinations of different commands. For example to calculate the **standard error (SE)** of x, which is: 
+
+$$ \mbox{Standard error} = SE = \frac{\tilde{S}} {\sqrt{n}} $$
+
+being $\tilde{S}$ the standard deviation of x.
+
+```{r, results='hide'}
+sd(x) / sqrt( length(x) )     # Standard error of x
+#     or even
+round( sd(x) / sqrt( length(x) ), 2)   # Two decimals rounded SE
+
+```
+
+## Condicionals and recursive commands
+
+The most used ones are **if()** and **for()**. Other control flow commands are while() and repeat(). if() can be used either with of without else. They function in much the same way as control statements in any Algol-like language. Also important the expressions ***break*** and ***next*** to control the flow.
+
+Braces are not necessary in the same line, but is advisable to use them always because is a frequent source of errors. 
+
+Examples:
+
+```{r}
+x <- -1:12                    # Create vector
+for (i in 1:5) print(1:i)      # Print numbers
+for (i in 1:5) { print(1:i) }  # Same than before
+##############   example of for with 2^n and print() and paste()
+for (i in x) { 
+   y <- 2^i
+   z <- paste(i, ": ", y, sep = "")     # Design the output
+   print(z)                             # Output
+}
+##############   Same example with if() to alineate variables
+for (i in x) { 
+   y <- 2^i                                 # Result
+   if (i >= 10) {
+       z <- paste(i, ": ", y, sep = "")     # Output
+    } else {
+        z <- paste(" ", i, ": ", y, sep = "") 
+    } # add and space
+   print(z)                                 # Output
+}
+##############   Same example with several if()
+for (i in x) { 
+   y <- 2^i                                 # Result
+   pa0 <- paste(i, ": ", y, sep = "")       # Design output
+   pa1 <- paste(" ", i, ": ", y, sep = "")  # add and space
+   if (i < 0)    print(pa0)                   # Output
+   if (0 <= i && i < 10) print(pa1)
+   if (i >= 10)  print(pa0) 
+}
+```
+
+***
+
+\pagebreak
+
+# Exercises
+
+
+```{r echo = F}
+knitr::opts_chunk$set(echo = F, eval = F)
+```
+
+1. Open the data frame in **iris {datasets}**.  ¿How many variables and observations are there in **iris**? 
+
+```{r}
+?iris
+data(iris)
+iris
+str(iris)
+
+# 150 obs. of  5 variables
+
+```
+
+2. Make a vector with the species names
+
+```{r}
+### real species names
+nsp <- paste("Iris", levels(iris$Species))
+nsp
+
+# "Iris setosa" "Iris versicolor" "Iris virginica"
+
+```
+
+3. Make a vector with the name of all quantitative variables
+
+```{r}
+### Easy way ####
+nqv <- names(iris)[1:4]
+nqv
+
+
+### hard way (R detects numeric vectors) ####
+Lo <- vector()
+for (i in 1:length(iris)) {
+    if (is.numeric(iris[[i]])) Lo <- c(Lo, i)
+}     # get position of quantitative variables in Lo
+Lo
+
+### create vector
+nqv <- names(iris)[Lo]
+nqv
+
+### remove unnecessary objects
+rm(i, Lo)
+
+# "Sepal.Length" "Sepal.Width"  "Petal.Length" "Petal.Width"
+
+```
+
+4. Make a data frame with the combination of the two previous vectors like this:
+
+```{r}
+### Create vectors Variable and Species
+Species  <- character()
+Variable <- character()
+for (i in nsp) {
+    Species  <- c(Species,rep(i,4))
+    Variable <- c(Variable,nqv)
+}
+
+### Create dataframe
+DF <- data.frame(Species, Variable)
+
+### remove unnecessary objects
+rm(i, Species, Variable)
+
+#### Other way of doing the same thing ####
+
+### Species and Variable (may be I can help with this part)
+DF <- as.data.frame(matrix(nrow =  12, ncol = 2))   # Data frame 12,2
+names(DF) <- c("Species", "Variable")               # Names
+#
+###   Including data
+k = 1
+for (i in levels(iris$Species)) {
+    for (j in names(iris)[1:4]) {
+        DF$Species[k]  <- paste("Iris", i)
+        DF$Variable[k] <- j
+        k = k + 1
+    }
+}
+DF
+
+### remove unnecessary objects
+rm(k)
+
+```
+
+5. Make a data frame with 7 variables and 12 rows including the two variables from exercise 4, and also the following statistics:  
+
+ * the following variables: Species, Variable, Mean, Standard_error, Median, Minimum and Maximum. 
+ 
+ * Use the commands seen in this and previous chapter to do the code the shortest and neatest possible. Also comment each step to know what are you doing. 
+
+```{r}
+### species names as in iris
+SP <- character()                 # initialize vector
+for (i in levels(iris$Species)) {
+    SP  <- c(SP, rep(i,4))
+}
+SP
+
+### include data into existing data frame DF
+# i = 1
+for (i in 1:12) {
+    # Subset of the data for each row i of DF
+    SS <- subset(iris[[DF$Variable[i]]]
+                 , as.character(iris$Species) == SP[i]
+                 )
+    # Variables
+    DF$Mean[i] <- mean(SS)
+    DF$Standard_error[i] <- sd(SS) / sqrt(length(SS))
+    DF$Median[i]  <- median(SS)
+    DF$Minimum[i] <- min(SS)
+    DF$Maximum[i] <- max(SS)
+}
+DF
+
+### remove unnecessary objects
+rm(i, SS, SP)
+
+#### Other way of doing the same thing ####
+
+### Create empty data frame
+DF <- as.data.frame(matrix(nrow =  12, ncol = 7))   # Data frame 12,7
+names(DF) <- c("Species", "Variable", "Mean", "Standard_error",
+               "Median", "Minimum", "Maximum")                # Names
+
+### Fill the data frame
+# j=names(iris)[1]
+k = 1
+for (i in levels(iris$Species)) {
+    for (j in names(iris)[1:4]) {
+        DF$Species[k]  <- i                        # Species
+        DF$Variable[k] <- j                        # Variable
+        SS <- subset(iris[[j]], iris$Species == i)
+        DF$Mean[k] <- mean(SS)                     # Mean
+        SE <- sd(SS) / sqrt( length(SS) )          # Standard error
+        DF$Standard_error[k] <- round(SE,3)        # rounded SE
+        DF$Median[k]  <- median(SS)                # Median
+        DF$Minimum[k] <- min(SS)                   # Minimum
+        DF$Maximum[k] <- max(SS)                   # Maximum
+        k = k + 1
+    }
+}
+DF
+
+### remove unnecessary objects
+rm(i, j, k, SE, SS)
+
+```
+ 
+ 
